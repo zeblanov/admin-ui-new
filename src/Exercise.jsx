@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import UserCard from "./UserCard";
-import { getUsersAsync } from "./Services";
+import { getUsers } from "./Services";
 
 function Exercise() {
   const [users, setUsers] = useState([]);
 
-  // Ambil data dari service
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getUsersAsync(); // panggil async/await
-      setUsers(data);
+      try {
+        const data = await getUsers();
+        setUsers(data);
+      } catch (error) {
+        console.error("[Component] Gagal menampilkan data:", error.message);
+      }
     };
     fetchData();
   }, []);
